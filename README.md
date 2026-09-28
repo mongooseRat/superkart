@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 **# SuperKart Sales Forecasting**
 
 
@@ -526,3 +527,7 @@
 
 **---**
 
+=======
+# superkart
+SuperKart Project
+>>>>>>> 068ffb1b50e2e4ececd0f71bcbe33f6e42e22390
