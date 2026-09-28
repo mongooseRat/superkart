@@ -1,533 +1,231 @@
 <<<<<<< HEAD
-**# SuperKart Sales Forecasting**
+# **SuperKart — Product Store Sales Prediction System**
 
+## **Summary**
+SuperKart is a fully deployed machine‑learning system designed to predict **weekly product‑level store sales** for a retail environment. The project integrates data science, model development, API engineering, containerization, and frontend design into a single, production‑ready solution.
 
+The system uses structured retail data — including product attributes, store characteristics, pricing, and city demographics — to generate accurate sales forecasts. After comprehensive preprocessing, feature engineering, and model evaluation, the final model was saved as a deployable artifact and exposed through a **FastAPI** prediction endpoint. The backend is fully containerized using **Docker**, ensuring reproducibility and seamless execution across environments.
 
-**Predict product‑store sales using a tuned XGBoost model.**
+A **Streamlit** frontend provides an intuitive interface for entering product and store details, sending requests to the API, and displaying predictions. End‑to‑end testing confirms reliable communication between the frontend and backend, with multiple prediction scenarios demonstrating correct model behavior and generalization.
 
+SuperKart meets the requirements for an end‑to‑end ML deployment project:
 
+- Data preparation and feature engineering  
+- Model training, evaluation, and artifact saving  
+- FastAPI backend with validated input schema  
+- Dockerized deployment for reproducibility  
+- Streamlit frontend for user interaction  
+- Verified predictions across multiple test cases  
+- Organized GitHub repository with full documentation  
 
-**## Features**
+SuperKart delivers a complete, real‑world machine‑learning pipeline capable of supporting retail decision‑making and operational forecasting.
 
-**- Flask API for predictions**
+---
 
-**- Streamlit front‑end**
+# **Project Write‑Up**
 
-**- 2026‑aligned store‑age logic**
+## **1. Problem Definition**
+Retail stores need accurate product‑level sales forecasts to optimize inventory, reduce stockouts, and improve revenue planning. Traditional forecasting methods often fail to incorporate product attributes, store characteristics, pricing, and city demographics.  
+**SuperKart** addresses this by building a machine‑learning model that predicts **weekly product store sales** using structured retail data.
 
-**- Clean engineered features**
+The goal is to deliver a fully deployed, real‑world ML system with:
 
+- A trained predictive model  
+- A FastAPI backend  
+- A Dockerized API  
+- A Streamlit frontend  
+- Clear documentation and reproducibility  
 
+---
 
-**## Run locally**
+## **2. Data Understanding & Preparation**
+The dataset includes product‑level and store‑level attributes:
 
-**bash**
+- Product weight  
+- Sugar content category  
+- Allocated shelf area  
+- Maximum retail price (MRP)  
+- Store size  
+- Store location city tier  
+- Store type  
+- Store age  
+- Product category  
 
-**pip install -r api/requirements.txt**
+### **Data Preparation Steps**
+- Missing values handled appropriately  
+- Categorical variables encoded using OneHotEncoder  
+- Numeric variables scaled or left raw depending on model needs  
+- Train/validation/test split performed  
+- Final feature order preserved for deployment  
 
-**python api/app.py**
+---
 
+## **3. Model Development**
+Multiple models were evaluated (Random Forest, Gradient Boosting, XGBoost).  
+The final model was selected based on:
 
+- Predictive performance  
+- Stability  
+- Generalization  
+- Deployment compatibility  
+
+The trained model was saved as:
+
+```
+superkart_best_model.joblib
+```
 
+---
+
+## **4. Model Evaluation**
+The model was evaluated using:
 
+- RMSE  
+- MAE  
+- R²  
+- Validation and test set performance  
+- Error analysis across store types and product categories  
+
+The model demonstrated strong predictive capability and generalized well across different store/product profiles.
 
+---
+
+## **5. Deployment Architecture**
 
+### **A. FastAPI Backend**
+- Defines `/predict` endpoint  
+- Validates input using Pydantic  
+- Loads the trained model  
+- Returns predictions as JSON  
 
-**# \*\*SuperKart Sales Prediction System - End‑to‑End ML Deployment\*\***
-
-
-
-**SuperKart is a full end‑to‑end machine learning system that predicts \*\*weekly product‑level store sales\*\* using historical retail data.**  
-
-**The project includes:**
-
-
-
-**- A trained ML model**  
-
-**- A production‑ready \*\*FastAPI\*\* backend served via \*\*Docker\*\***  
-
-**- A user‑friendly \*\*Streamlit\*\* frontend**  
-
-**- A complete data pipeline and training notebook**  
-
-**- A fully documented GitHub repository**  
-
-
-
-**This README provides everything needed to understand, run, and evaluate the project.**
-
-
-
-**---**
-
-
-
-**## \*\*1. Project Overview\*\***
-
-
-
-**SuperKart predicts weekly sales for retail products based on:**
-
-
-
-**- Product attributes**  
-
-**- Store characteristics**  
-
-**- Pricing**  
-
-**- Allocated shelf area**  
-
-**- City tier**  
-
-**- Store type**  
-
-**- Product category**  
-
-
-
-**The goal is to help retail managers forecast demand, optimize inventory, and improve store‑level decision‑making.**
-
-
-
-**The system is designed for \*\*real‑world deployment\*\*, with:**
-
-
-
-**- A Dockerized API**  
-
-**- A FastAPI prediction endpoint**  
-
-**- A Streamlit UI for interactive predictions**  
-
-**- A trained model stored as a `.joblib` artifact**  
-
-
-
-**---**
-
-
-
-**## \*\*2. Model Summary\*\***
-
-
-
-**The model was trained using:**
-
-
-
-**- \*\*Random Forest / XGBoost\*\***
-
-**- One‑Hot Encoding for categorical variables**
-
-**- Standard numeric preprocessing**
-
-**- Hyperparameter tuning**
-
-**- Train/validation/test split**
-
-
-
-**The final model is saved as:**
-
-
-
-**'superkart\_best\_model.joblib'**
-
-
-
-**### \*\*Model Inputs (Features)\*\***
-
-
-
-**The model expects the following features in this exact order:**
-
-
-
-**1. Product\_Weight**  
-
-**2. Product\_Sugar\_Content**  
-
-**3. Product\_Allocated\_Area**  
-
-**4. Product\_MRP**  
-
-**5. Store\_Size**  
-
-**6. Store\_Location\_City\_Type**  
-
-**7. Store\_Type**  
-
-**8. Store\_Age\_Years**  
-
-**9. Product\_Type\_Category**  
-
-
-
-**### \*\*Model Output\*\***
-
-
-
-**The API returns:**
-
-
-
-**'Predicted\_Product\_Store\_Sales\_Total'**
-
-
-
-**---**
-
-
-
-**## \*\*3. Repository Structure\*\***
-
-
-
-**'superkart/**
-
-**│**
-
-**├── api/**
-
-**│   ├── app.py                     # FastAPI backend**
-
-**│   ├── Dockerfile                 # Production-ready Dockerfile**
-
-**│   ├── requirements.txt           # Includes fastapi, uvicorn, pydantic**
-
-**│   └── superkart\_best\_model.joblib**
-
-**│**
-
-**├── streamlit/**
-
-**│   └── app.py                     # Streamlit frontend**
-
-**│**
-
-**├── notebooks/**
-
-**│   └── model\_training.ipynb       # Full training workflow**
-
-**│**
-
-**├── data/**
-
-**│   ├── raw/                       # Raw CSVs**
-
-**│   └── processed/                 # Cleaned data**
-
-**│**
-
-**├── README.md                      # Project documentation**
-
-**└── .gitignore**
-
-**'**
-
-
-
-**---**
-
-
-
-**## \*\*4. FastAPI Backend (Dockerized)\*\***
-
-
-
-**The backend is a FastAPI application served using \*\*Uvicorn\*\* inside Docker.**
-
-
-
-**### \*\*Run the API using Docker\*\***
-
-
-
-**From the 'api/' directory:**
-
-
-
-**'**
-
-**docker build -t superkart-api .**
-
-**docker run -p 7860:7860 superkart-api**
-
-**'**
-
-
-
-**### \*\*API Documentation\*\***
-
-
-
-**Once running, open:**
-
-
-
-**'**
-
-**http://localhost:7860/docs**
-
-**'**
-
-
-
-**You will see:**
-
-
-
-**- Swagger UI**  
-
-**- '/predict' endpoint**  
-
-**- JSON schema**  
-
-**- Try‑it‑out interface**  
-
-
-
-**---**
-
-
-
-**## \*\*5. Prediction Endpoint\*\***
-
-
-
-**### \*\*POST /predict\*\***
-
-
-
-**Example request:**
-
-
-
-**'json**
-
-**{**
-
-&#x20; **"Product\_Weight": 1.2,**
-
-&#x20; **"Product\_Sugar\_Content": "Regular",**
-
-&#x20; **"Product\_Allocated\_Area": 20.0,**
-
-&#x20; **"Product\_MRP": 199.99,**
-
-&#x20; **"Store\_Size": "Medium",**
-
-&#x20; **"Store\_Location\_City\_Type": "Tier 1",**
-
-&#x20; **"Store\_Type": "Supermarket Type1",**
-
-&#x20; **"Store\_Age\_Years": 12,**
-
-&#x20; **"Product\_Type\_Category": "Perishables"**
-
-**}**
-
-**'**
-
-
-
-**Example response:**
-
-
-
-**'json**
-
-**{**
-
-&#x20; **"Predicted\_Product\_Store\_Sales\_Total": 5231.806640625**
-
-**}**
-
-**'**
-
-
-
-**---**
-
-
-
-**## \*\*6. Streamlit Frontend\*\***
-
-
-
-**The Streamlit app provides a clean UI for entering product/store details and receiving predictions.**
-
-
-
-**### \*\*Run Streamlit\*\***
-
-
-
-**From the `streamlit/` directory:**
-
-
-
-**'**
-
-**streamlit run app.py**
-
-**'**
-
-
-
-**The app will automatically send POST requests to:**
-
-
-
-**'**
-
-**http://localhost:7860/predict**
-
-**'**
-
-
-
-**---**
-
-
-
-**## \*\*7. How Everything Works Together\*\***
-
-
-
-**1. \*\*User enters product/store details in Streamlit\*\***  
-
-**2. Streamlit sends a \*\*POST\*\* request to FastAPI**  
-
-**3. FastAPI validates the input using Pydantic**  
-
-**4. The model receives the features in the correct order**  
-
-**5. The model predicts weekly sales**  
-
-**6. FastAPI returns the prediction**  
-
-**7. Streamlit displays the result**  
-
-
-
-**This is a fully functional ML deployment pipeline.**
-
-
-
-**---**
-
-
-
-**## \*\*8. Technologies Used\*\***
-
-
-
-**- Python**  
-
-**- Pandas**  
-
-**- Scikit‑Learn**  
-
-**- FastAPI**  
-
-**- Uvicorn**  
-
-**- Streamlit**  
-
-**- Docker**  
-
-**- Joblib**  
-
-**- Pydantic**  
-
-
-
-**---**
-
-
-
-**## \*\*9. How to Reproduce the Project\*\***
-
-
-
-**1. Clone the repository**  
-
-**2. Install dependencies or build Docker image**  
-
-**3. Run the FastAPI backend**  
-
-**4. Run the Streamlit frontend**  
-
-**5. Test predictions using '/docs' or Streamlit**  
-
-
-
-**---**
-
-
-
-**## \*\*10. Author\*\***
-
-
-
-**\*\*CEASAR\*\***  
-
-**Machine Learning Engineer**  
-
-**Virginia, USA**  
-
-
-
-**---**
-
-
-
-**## \*\*11. Notes\*\***
-
-
-
-**- The API only accepts \*\*POST\*\* requests**  
-
-**- '/predict' will return \*\*405 Method Not Allowed\*\* if accessed via browser**  
-
-**- All categorical values must match the model’s encoder categories**  
-
-**- The model requires features in a specific order**  
-
-
-
-**---**
-
-
-
-**## \*\*12. Submission Checklist\*\***
-
-
-
-**- \[x] Model trained and saved**  
-
-**- \[x] FastAPI backend working**  
-
-**- \[x] Docker container running**  
-
-**- \[x] '/docs' reachable**  
-
-**- \[x] Streamlit connected**  
-
-**- \[x] Predictions verified**  
-
-**- \[x] README completed**  
-
-**- \[x] Repo ready for submission**  
-
-
-
-**---**
-
-=======
-# superkart
-SuperKart Project
+### **B. Docker Container**
+- Ensures reproducible environment  
+- Runs Uvicorn server inside container  
+- Exposes port `7860`  
+
+### **C. Streamlit Frontend**
+- User inputs product/store details  
+- Sends POST request to FastAPI  
+- Displays predicted sales  
+
+---
+
+## **6. API Verification (Test Cases)**
+
+### **Test Case 1 — High‑MRP, Large Store**
+```
+{
+  "Predicted_Product_Store_Sales_Total": 3454.966552734375
+}
+```
+
+### **Test Case 2 — Low‑MRP, Small Store**
+```
+{
+  "Predicted_Product_Store_Sales_Total": 789.416748046875
+}
+```
+
+These demonstrate correct schema handling, categorical encoding, numeric processing, and end‑to‑end prediction functionality.
+
+---
+
+## **7. System Integration**
+Streamlit successfully communicates with FastAPI:
+
+- Streamlit sends POST requests  
+- FastAPI validates and processes input  
+- Model predicts  
+- Streamlit displays results  
+
+Docker logs confirm:
+
+```
+POST /predict HTTP/1.1" 200 OK
+```
+
+---
+
+## **8. Repository Structure**
+```
+superkart/
+│
+├── api/
+│   ├── app.py
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── superkart_best_model.joblib
+│
+├── streamlit/
+│   └── app.py
+│
+├── notebooks/
+│   └── model_training.ipynb
+│
+├── data/
+│   ├── raw/
+│   └── processed/
+│
+├── README.md
+└── .gitignore
+```
+
+---
+
+## **9. How to Run the API (Docker)**
+
+### **Build the API container**
+```
+docker build -t superkart-api .
+```
+
+### **Run the container**
+```
+docker run -p 7860:7860 superkart-api
+```
+
+API will be available at:
+
+```
+http://localhost:7860/predict
+```
+
+---
+
+## **10. How to Run Streamlit**
+From the `streamlit/` directory:
+
+```
+streamlit run app.py
+```
+
+The UI will open in your browser.
+
+---
+
+## **11. Technologies Used**
+- Python  
+- Pandas  
+- Scikit‑Learn  
+- FastAPI  
+- Uvicorn  
+- Streamlit  
+- Docker  
+- Joblib  
+- JSON  
+
+---
+
+## **12. Submission Checklist**
+- [x] Model trained and saved  
+- [x] API implemented  
+- [x] Dockerfile created  
+- [x] Streamlit UI implemented  
+- [x] End‑to‑end tests completed  
+- [x] README documented  
+- [x] Repo structured and clean  
+- [x] Predictions verified  
+- [x] Project submitted  
+
+---
 >>>>>>> 068ffb1b50e2e4ececd0f71bcbe33f6e42e22390
